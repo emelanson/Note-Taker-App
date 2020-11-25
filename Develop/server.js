@@ -1,35 +1,39 @@
-var express = require("express");
-var path = require("path");
-var fs = require("fs");
+const express = require("express");
+const path = require("path");
+const fs = require("fs");
 
-var app = express();
-var PORT = 8080;
+const app = express();
+const PORT = 8080;
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(express.static('public'));
+
+var noteDatabase = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
 
 
-fs.readFile(path.join(__dirname, 'db/db.json'), (err, data) => {
-    if (err) throw err;
-    let database = JSON.parse(data);
-    console.log(database);
-});
+console.log("THIS IS READ DATA!!!!!!!!!!!", noteDatabase);
 
-
-app.get("*", function (req, res) {
-    res.sendFile(path.join(__dirname, "public/index.html"), (err, data) => {
+app.get("/", function (req, res) {
+    res.sendFile(path.join(__dirname, "./public/index.html"), (err) => {
         if (err) throw err;
-
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.end(data);
     });
 });
 
-app.get("/", function (req, res) {
-    res.sendFile(path.join(__dirname, "public/notes.html"), (err, data) => {
+app.get("/notes", function (req, res) {
+    res.sendFile(path.join(__dirname, "./public/notes.html"), (err) => {
         if (err) throw err;
-        res.writeHead(200, { 'Content-Type': 'text/html' });
-        res.end(data);
+    });
+});
+
+app.get("/api/notes", function (req, res) {
+    res.json(noteDatabase);
+});
+
+app.post("/api/notes", function (req, res) {
+
+    fs.writeFile(path.join(__dirname, 'db/db.json'), JSON.stringify(data), (err) => {
+        if (err) console.log(err);
     });
 });
 
