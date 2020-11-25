@@ -1,10 +1,1 @@
-[
-    {
-        "title": "ADD THIS TO DB",
-        "text": "AND THIS AS TEXT"
-    },
-    {
-        "title": "SECOND NOTE",
-        "text": "AND THIS AS TEXT"
-    }
-]
+[{"title":"Here is a note","text":"second note"},{"title":"Here is a note","text":"second note"},{"title":"Try this","text":"text here"},{"title":"a fourth note","text":"try this"},{"title":"a fourth note","text":"try this"},{"title":"a fourth note","text":"try this"}]

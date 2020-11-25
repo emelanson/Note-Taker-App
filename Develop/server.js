@@ -11,9 +11,6 @@ app.use(express.static('public'));
 
 var noteDatabase = JSON.parse(fs.readFileSync("./db/db.json", "utf8"));
 
-
-console.log("THIS IS READ DATA!!!!!!!!!!!", noteDatabase);
-
 app.get("/", function (req, res) {
     res.sendFile(path.join(__dirname, "./public/index.html"), (err) => {
         if (err) throw err;
@@ -32,9 +29,12 @@ app.get("/api/notes", function (req, res) {
 
 app.post("/api/notes", function (req, res) {
 
-    fs.writeFile(path.join(__dirname, 'db/db.json'), JSON.stringify(data), (err) => {
+    noteDatabase.push(req.body);
+
+    fs.writeFile(path.join(__dirname, 'db/db.json'), JSON.stringify(noteDatabase), (err) => {
         if (err) console.log(err);
     });
+    res.redirect("/notes");
 });
 
 
